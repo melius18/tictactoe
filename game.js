@@ -25,6 +25,8 @@ function exp_tb() {
     }
 }
 
+
+// assign event handler.
 for (let i = 0; i < td_arr.length; i++) td_arr[i].onclick = click_td;
 
 // start button
