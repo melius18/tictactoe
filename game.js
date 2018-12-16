@@ -3,6 +3,33 @@ let turn_num = 0;
 let bd_arr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 let td_arr = [td0, td1, td2, td3, td4, td5, td6, td7, td8];
 
+// show state
+btn3.onclick = function () {
+    console.log(bd_arr);
+    console.log(turn_num);
+}
+
+// waiting(turn == 0), initialization
+// restart button,
+btn2.onclick = function () {
+    turn = 0;
+    turn_num = 0;
+    for (let i = 0; i < td_arr.length; i++) bd_arr[i] = 0;
+    btn2.hidden = "none";
+    btn1.hidden = "";
+    exp_tb();
+}
+
+// gaming(turn != 0)
+// start button
+btn1.onclick = function () {
+    turn = 1;
+    btn1.hidden = "none";
+    btn2.hidden = "";
+}
+
+// assign event handler.
+for (let i = 0; i < td_arr.length; i++) td_arr[i].onclick = click_td;
 
 // td click event handler
 function click_td() {
@@ -11,8 +38,8 @@ function click_td() {
         bd_arr[num] = turn;
         turn = -turn;
         turn_num++;
-        exp_tb();
-        bd_state();
+        exp_tb();   // express table color
+        bd_state(); // chech board state 
     }
 }
 
@@ -23,33 +50,6 @@ function exp_tb() {
         else if (bd_arr[i] == -1) td_arr[i].style.backgroundColor = "grey";
         else td_arr[i].style.backgroundColor = "white";
     }
-}
-
-
-// assign event handler.
-for (let i = 0; i < td_arr.length; i++) td_arr[i].onclick = click_td;
-
-// start button
-btn1.onclick = function () {
-    turn = 1;
-    btn1.hidden = "none";
-    btn2.hidden = "";
-}
-
-// restart button
-btn2.onclick = function () {
-    turn = 0;
-    turn_num = 0;
-    for (let i = 0; i < td_arr.length; i++) bd_arr[i] = 0;
-    exp_tb();
-    btn2.hidden = "none";
-    btn1.hidden = "";
-}
-
-// show state
-btn3.onclick = function () {
-    console.log(bd_arr);
-    console.log(turn_num);
 }
 
 // check board state
