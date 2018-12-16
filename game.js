@@ -68,7 +68,7 @@ function bd_state() {
     }
 }
 
-// check line
+// check lines
 function chkLine(num) {
     if (num == 3 || num == -3) {
         if (num == 3) {
