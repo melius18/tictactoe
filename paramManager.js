@@ -1,22 +1,41 @@
-let prm = [1, 2, 3, 4, 5, 6, 7];
-let text;
-let reader = new FileReader();
+let reader1 = new FileReader();
+let reader2 = new FileReader();
 
-reader.onload = function (e) {
-    text = reader.result;
-    let prm2 = text.split(",").map(x => parseFloat(x));
-    console.log(prm2);
-    console.log(typeof prm2[6]);
+reader1.onload = function (e) {
+    let text = reader1.result;
+    state_id = text.split(",").map(x => parseFloat(x));
 }
 
-function handleFileSelect(evt) {
+reader2.onload = function (e) {
+    let text = reader2.result;
+    state_val = text.split(",").map(x => parseFloat(x));
+}
+
+function handleFileSelect1(evt) {
     let files = evt.target.files;
     for (let i = 0, f; f = files[i]; i++) {
-        reader.readAsText(f); // 'utf-8'
+        reader1.readAsText(f); // 'utf-8'
     }
 }
 
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
+function handleFileSelect2(evt) {
+    let files = evt.target.files;
+    for (let i = 0, f; f = files[i]; i++) {
+        reader2.readAsText(f); // 'utf-8'
+    }
+}
 
-let blob = new Blob([prm], { type: "text/plain;charset=utf-8" });
-saveAs(blob, "param_t3.txt");
+document.getElementById('file1').addEventListener('change', handleFileSelect1, false);
+document.getElementById('file2').addEventListener('change', handleFileSelect2, false);
+
+// save files
+btn7.onclick = saveFiles;
+
+function saveFiles() {
+    // state_id , input of value function
+    // state_val, output of value function
+    let blob_id = new Blob([state_id], { type: "text/plain;charset=utf-8" });
+    saveAs(blob_id, "param_id.txt");
+    let blob_val = new Blob([state_val], { type: "text/plain;charset=utf-8" });
+    saveAs(blob_val, "param_val.txt");
+}

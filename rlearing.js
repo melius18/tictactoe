@@ -1,7 +1,8 @@
-let state_id = [], state_val = [];
+let state_id = [];      // input of value function
+let state_val = [];     // output of value function
 let alpha = 0.1;
-let beta_g = 0.75;     // 0: rnd   1: greedy
-let beta_n = 0.75;     // 0: rnd   1: greedy
+let beta_g = 0.75;      // 0: rnd   1: greedy
+let beta_n = 0.75;      // 0: rnd   1: greedy
 
 function get_state_num(arr) {
     let bd_num = 0;

@@ -1,6 +1,6 @@
 let turn = 0;       // Grey: 1, Navy: -1
 let turn_num = 0;
-let bd_arr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+let bd_arr = [0, 0, 0, 0, 0, 0, 0, 0, 0];   // present board state
 let td_arr = [td0, td1, td2, td3, td4, td5, td6, td7, td8];
 let com_turn = 0;
 let full_auto = 1;  // com vs com
@@ -16,6 +16,23 @@ let dt = 50;
 btn3.onclick = function () {
     console.log(bd_arr);
     console.log(turn_num);
+}
+
+// stop
+btn4.onclick = function () {
+    full_auto = 0;
+    auto_start = 0;
+}
+
+// auto start
+btn5.onclick = function () {
+    auto_start = 1;
+}
+
+// learning
+btn6.onclick = function () {
+    full_auto = 1;
+    auto_start = 1;
 }
 
 // waiting(turn == 0), initialization
