@@ -8,7 +8,7 @@ btn6.onclick = function () {
         alert("Assign position of agent!");
     }
     else {
-        move(1);
+        move_q();
     }
 }
 
@@ -30,5 +30,13 @@ window.onkeydown = function (e) {
         else if (e.keyCode == 38) move(1);  // up
         else if (e.keyCode == 39) move(2);  // right
         else if (e.keyCode == 40) move(3);  // down
+    }
+}
+
+function move_q() {
+    let i = 0;
+    while (i < 10) {
+        i++;
+        setTimeout(function () { move(1); }, 100 * i);
     }
 }

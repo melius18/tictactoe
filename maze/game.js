@@ -2,6 +2,9 @@ let row = 13, col = 13;
 let mz_arr = [];
 let td_arr = [];
 let agent_ = [0, 0, 0];
+// agent_[0]: 0: init, 1: ready to assign, 2: assigned
+// agent_[1]: x
+// agent_[2]: y
 let state = 0;
 // obstacle: 1
 // goal: 100
