@@ -1,10 +1,12 @@
 let row = 13, col = 13;
 let mz_arr = [];
 let td_arr = [];
-let agent_ = [0, 0, 0];
+let agent_ = [0, 0, 0, 0, 0];
 // agent_[0]: 0: init, 1: ready to assign, 2: assigned
-// agent_[1]: x
-// agent_[2]: y
+// agent_[1]: x_present
+// agent_[2]: y_present
+// agent_[3]: x_init
+// agent_[4]: y_init
 let state = 0;
 // obstacle: 1
 // goal: 100
@@ -27,6 +29,15 @@ for (let i = 0; i < row; i++) {
     td_arr[i] = td_elm;
 }
 
+function init_tb() {
+    mz_arr[2][2] = 100;
+    mz_arr[row - 3][col - 3] = -100;
+    mz_arr[4][5] = mz_arr[10][8] = mz_arr[5][7] = mz_arr[3][6] = 1;
+    exp_tb();
+}
+
+init_tb();
+
 // td click event handler
 function click_td() {
     let idlen = this.id.length - 2;
@@ -36,14 +47,15 @@ function click_td() {
 
     if (agent_[0] == 1) {
         agent_[0] = 2;
-        agent_[1] = i;
-        agent_[2] = j;
+        agent_[3] = agent_[1] = i;
+        agent_[4] = agent_[2] = j;
     }
-
-    if (mz_arr[i][j] == 0) {
-        mz_arr[i][j] = state;
-    } else {
-        mz_arr[i][j] = 0;
+    else {
+        if (mz_arr[i][j] == 0) {
+            mz_arr[i][j] = state;
+        } else {
+            mz_arr[i][j] = 0;
+        }
     }
     exp_tb();
 }
@@ -76,7 +88,7 @@ btn2.onclick = function () {
 }
 
 function clear_tb() {
-    agent_ = [0, 0, 0];
+    agent_ = [0, 0, 0, 0, 0];
     for (let i = 0; i < row; i++) {
         for (let j = 0; j < col; j++) {
             mz_arr[i][j] = 0;
