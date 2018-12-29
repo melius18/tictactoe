@@ -1,4 +1,4 @@
-let row = 13, col = 13;
+// let row = 13, col = 13;
 let mz_arr = [];
 let td_arr = [];
 let agent_ = [0, 0, 0, 0, 0];
@@ -31,7 +31,9 @@ for (let i = 0; i < row; i++) {
 
 function init_tb() {
     mz_arr[2][2] = 100;
+    set_q(2, 2, 100);
     mz_arr[row - 3][col - 3] = -100;
+    set_q(row - 3, col - 3, -100);
     mz_arr[4][5] = mz_arr[10][8] = mz_arr[5][7] = mz_arr[3][6] = 1;
     exp_tb();
 }
@@ -53,6 +55,7 @@ function click_td() {
     else {
         if (mz_arr[i][j] == 0) {
             mz_arr[i][j] = state;
+            if (state == 100 || state == -100) set_q(i, j, state);
         } else {
             mz_arr[i][j] = 0;
         }
@@ -64,6 +67,7 @@ function click_td() {
 function exp_tb() {
     for (let i = 0; i < row; i++) {
         for (let j = 0; j < col; j++) {
+            // console.log('agent_[0]', agent_[0]);
             if (agent_[0] == 2 && agent_[1] == i && agent_[2] == j) {
                 td_arr[i][j].style.backgroundColor = "black";
             } else {

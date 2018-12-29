@@ -2,6 +2,7 @@
 // agent_
 // state >> obstacle: 1, goal: 100, hell: -100
 
+let alph = 0.1;
 let beta = 0.5; // probability of rnd
 
 // start
@@ -16,20 +17,26 @@ btn6.onclick = function () {
         console.log(agent_, mz_arr[agent_[1]][agent_[2]]);
         setTimeout(function () {
             move_q();
-        }, 50);
+        }, 30);
     }
 }
 
 function move(dir) {
     // dir 0: south, 1: north, east, 2: south, 3: north
     let agent = JSON.parse(JSON.stringify(agent_));
-    let agentn;
+    let agentn = JSON.parse(JSON.stringify(agent_));
     if (dir == 0 && agent_[2] > 0 && agent_[2] <= (col - 1)) agent[2]--;      // left
     else if (dir == 1 && agent_[1] > 0 && agent_[1] <= (row - 1)) agent[1]--; // up
     else if (dir == 2 && agent_[2] >= 0 && agent_[2] < (col - 1)) agent[2]++; // right
     else if (dir == 3 && agent_[1] >= 0 && agent_[1] < (row - 1)) agent[1]++; // down
 
     if (mz_arr[agent[1]][agent[2]] != 1) agentn = agent;
+    // q-learning
+    // q(x,a) = q(x,a) + alpha*(r + q(x',a') - q(x,a))
+    // q(x',a')
+    let q2 = q_[agentn[1]][agentn[2]][indexOfMax(q_[agentn[1]][agentn[2]])];
+    let q1 = q_[agent_[1]][agent_[2]][dir];
+    q_[agent_[1]][agent_[2]][dir] = q1 + alph * (-1 + q2 - q1);
     agent_ = agentn;
     exp_tb();
     console.log(agent_, mz_arr[agent_[1]][agent_[2]]);
@@ -44,6 +51,7 @@ window.onkeydown = function (e) {
     }
 }
 
+let auto = 0;
 let i = 0;
 function move_q() {
     if (mz_arr[agent_[1]][agent_[2]] == 0) {
@@ -54,15 +62,19 @@ function move_q() {
         setTimeout(function () {
             move(m);
             move_q();
-        }, 30);
+        }, 10);
+    } else if (auto == 1) {
+        setTimeout(function () {
+            btn6.onclick();
+        }, 100);
     }
 }
 
 function indexOfMax(arr) {
     if (arr.length === 0) return -1;
 
-    var maxIndex = Math.floor(Math.random() * 4.0);
-    var max = arr[maxIndex];
+    let maxIndex = Math.floor(Math.random() * 4.0);
+    let max = arr[maxIndex];
 
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] > max) {
