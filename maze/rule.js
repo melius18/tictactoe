@@ -4,9 +4,14 @@
 
 let alph = 0.1;
 let beta = 0.5; // probability of rnd
+let mcnt = 0;
+let max_mcnt = 200;
+let auto = 0;   // auto restart
+let m_rd = -2;
 
 // start
 btn6.onclick = function () {
+    mcnt = 0;
     if (agent_[0] != 2) {
         alert("Assign position of agent!");
     }
@@ -14,7 +19,8 @@ btn6.onclick = function () {
         agent_[1] = agent_[3];
         agent_[2] = agent_[4];
         exp_tb();
-        console.log(agent_, mz_arr[agent_[1]][agent_[2]]);
+        // console.log(agent_, mz_arr[agent_[1]][agent_[2]]);
+        console.log('auto', auto);
         setTimeout(function () {
             move_q();
         }, 30);
@@ -36,10 +42,10 @@ function move(dir) {
     // q(x',a')
     let q2 = q_[agentn[1]][agentn[2]][indexOfMax(q_[agentn[1]][agentn[2]])];
     let q1 = q_[agent_[1]][agent_[2]][dir];
-    q_[agent_[1]][agent_[2]][dir] = q1 + alph * (-1 + q2 - q1);
+    q_[agent_[1]][agent_[2]][dir] = q1 + alph * (m_rd + q2 - q1);
     agent_ = agentn;
     exp_tb();
-    console.log(agent_, mz_arr[agent_[1]][agent_[2]]);
+    // console.log(agent_, mz_arr[agent_[1]][agent_[2]]);
 }
 
 window.onkeydown = function (e) {
@@ -51,11 +57,12 @@ window.onkeydown = function (e) {
     }
 }
 
-let auto = 0;
-let i = 0;
+
+// let i = 0;
 function move_q() {
-    if (mz_arr[agent_[1]][agent_[2]] == 0) {
-        i++;
+    if (mz_arr[agent_[1]][agent_[2]] == 0 && mcnt < max_mcnt) {
+        // i++;
+        mcnt++;
         let m;
         if (Math.random() > beta) m = Math.floor(Math.random() * 4.0);
         else m = indexOfMax(q_[agent_[1]][agent_[2]]);
@@ -63,7 +70,8 @@ function move_q() {
             move(m);
             move_q();
         }, 10);
-    } else if (auto == 1) {
+    } else if (auto > 0) {
+        auto--;
         setTimeout(function () {
             btn6.onclick();
         }, 100);
